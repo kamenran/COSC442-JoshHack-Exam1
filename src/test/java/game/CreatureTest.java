@@ -6,6 +6,7 @@ import java.awt.Color;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -60,4 +61,19 @@ public class CreatureTest {
         assertEquals(100, creature.hp());
         assertEquals(creature, world.creature(1, 1, 0));
     }
+    @Test
+void deathAnnouncementIsSent() {
+    StringBuilder messages = new StringBuilder();
+
+    new CreatureAi(creature) {
+        @Override
+        public void onNotify(String message) {
+            messages.append(message);
+        }
+    };
+
+    creature.modifyHp(-100, "damage");
+
+    assertTrue(messages.toString().contains("You die."));
+}
 }
