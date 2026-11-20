@@ -82,4 +82,18 @@ class CreatureItemTransferTest {
         assertFalse(inventory.contains(sword));
         assertNull(creature.weapon());
     }
+
+    @Test
+    void equipUsesWeaponSlotWhenCombinedAttackEqualsDefense() {
+        Item item = new Item(')', Color.GRAY, "bow", null);
+        item.modifyAttackValue(2);
+        item.modifyRangedAttackValue(3);
+        item.modifyDefenseValue(5);
+        inventory.add(item);
+
+        creature.equip(item);
+
+        assertSame(item, creature.weapon());
+        assertNull(creature.armor());
+    }
 }
