@@ -51,7 +51,9 @@ public class CreatureTest {
 
         assertEquals(0, creature.hp());
         assertNull(world.creature(1, 1, 0));
-        assertNotNull(world.item(1, 1, 0));
+        Item corpse = world.item(1, 1, 0);
+        assertNotNull(corpse);
+        assertEquals(500, corpse.foodValue());
     }
 
     @Test
